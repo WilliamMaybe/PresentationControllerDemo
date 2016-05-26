@@ -11,7 +11,6 @@
 @interface CustomTransition ()
 
 @property (nonatomic, readonly) BOOL isPresenting;
-@property (nonatomic, strong) UIViewController *viewController;
 
 @end
 
@@ -59,11 +58,11 @@
         
         [containerView addSubview:toView];
         
-        [UIView animateWithDuration:[self transitionDuration:transitionContext] delay:0 usingSpringWithDamping:0.7 initialSpringVelocity:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
-            fromView.frame = CGRectOffset(fromView.frame, 0, -containerView.bounds.size.height);
+        [UIView animateWithDuration:[self transitionDuration:transitionContext] delay:0 usingSpringWithDamping:0.7 initialSpringVelocity:0.0 options:UIViewAnimationOptionCurveLinear | UIViewAnimationOptionAllowUserInteraction animations:^{
+            fromView.frame = CGRectOffset(fromView.frame, 0, containerView.bounds.size.height);
         } completion:^(BOOL finished) {
             if (finished) {
-                [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
+                [transitionContext completeTransition:![transitionContext transitionWasCancelled] || ![transitionContext isInteractive]];
             }
         }];
     }

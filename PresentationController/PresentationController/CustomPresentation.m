@@ -50,13 +50,13 @@
 }
 
 - (CGRect)frameOfPresentedViewInContainerView {
-    CGRect frame1 = self.containerView.bounds;
+    CGRect frame = self.containerView.bounds;
     
     CGFloat heightOffset = 100;
-    frame1.origin.y += heightOffset;
-    frame1.size.height -= heightOffset;
+    frame.origin.y += heightOffset;
+    frame.size.height -= heightOffset;
     
-    return frame1;
+    return frame;
 }
 
 - (UIView *)presentedView {

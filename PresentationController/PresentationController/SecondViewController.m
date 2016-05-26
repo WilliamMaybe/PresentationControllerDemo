@@ -48,9 +48,12 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)panGesture:(UIGestureRecognizer *)gesture {
-    CGFloat progress = [gesture locationInView:gesture.view].y / CGRectGetHeight(gesture.view.bounds);
-    progress = MIN(1, MAX(0, progress));
+- (void)panGesture:(UIPanGestureRecognizer *)gesture {
+    CGFloat progress = [gesture translationInView:gesture.view].y / CGRectGetHeight(gesture.view.bounds);
+//    progress = MIN(1, MAX(0, progress));
+//    progress = [gesture locationInView:self.view].y / 1800;
+    
+    NSLog(@"%.2lf",progress);
     
     switch (gesture.state) {
         case UIGestureRecognizerStateBegan:
@@ -62,12 +65,12 @@
             break;
         case UIGestureRecognizerStateEnded:
         case UIGestureRecognizerStateCancelled:
-            if (progress > 0.3) {
-                [self.percentTransition finishInteractiveTransition];
-            } else {
-                [self.percentTransition cancelInteractiveTransition];
-            }
-            
+//            if (progress > 0.3) {
+//                [self.percentTransition finishInteractiveTransition];
+//            } else {
+//                [self.percentTransition cancelInteractiveTransition];
+//            }
+            [self.percentTransition finishInteractiveTransition];
             self.percentTransition = nil;
             break;
         default:
@@ -92,7 +95,10 @@
 }
 
 - (id<UIViewControllerInteractiveTransitioning>)interactionControllerForDismissal:(id<UIViewControllerAnimatedTransitioning>)animator {
-    return self.percentTransition;
+    if (animator) {
+        return self.percentTransition;
+    }
+    return nil;
 }
 
 @end
